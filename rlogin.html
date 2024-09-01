@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+<?xml version="1.0" encoding="UTF-8"?>
+<WISPAccessGatewayParam
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="http://$(hostname)/xml/WISPAccessGatewayParam.xsd">
+    <Redirect>
+	<AccessProcedure>1.0</AccessProcedure>
+	<AccessLocation>$(location-id)</AccessLocation>
+	<LocationName>$(location-name)</LocationName>
+	<LoginURL>$(link-login-only)?target=xml</LoginURL>
+	<MessageType>100</MessageType>
+	<ResponseCode>0</ResponseCode>
+    </Redirect>
+</WISPAccessGatewayParam>
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="0; url=$(link-redirect)">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="expires" content="-1">
+    <title>...</title>
+    <link rel="stylesheet" href="packages/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="particles-js" class="bg-primary position-fixed w-100 h-100">
+        <canvas class="particles-js-canvas-el"></canvas>
+    </div>
+    <div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center">
+        <div class="card p-5 shadow-lg border-1 rounded-3 w-100 my-5" id="card">
+            <p class="mb-4 text-center">$(if http-status == 302) Hotspot login required $(endif)</p>
+            <p class="m-0 text-center">$(if http-header == "Location") $(link-redirect) $(endif)</p>
+        </div>
+    </div>
+    <script src="packages/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="packages/particles/particles.min.js"></script>
+    <script src="packages/particles/app.js"></script>
+</body>
+</html>

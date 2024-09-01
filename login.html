@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="expires" content="-1">
+    <title>Internet hotspot - Log in</title>
+    <link rel="stylesheet" href="packages/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="particles-js" class="bg-primary position-fixed w-100 h-100">
+        <canvas class="particles-js-canvas-el"></canvas>
+    </div>
+    $(if chap-id)
+        <form name="sendin" action="$(link-login-only)" method="post" class="d-none">
+            <input type="hidden" name="username">
+            <input type="hidden" name="password">
+            <input type="hidden" name="dst" value="$(link-orig)">
+            <input type="hidden" name="popup" value="true">
+        </form>
+        <script src="md5.js"></script>
+        <script>
+            function doLogin(){
+                document.sendin.username.value = document.login.username.value;
+                document.sendin.password.value = hexMD5("$(chap-id)" + document.login.password.value + "$(chap-challenge)");
+                document.sendin.submit();
+                return false;
+            }    
+        </script>
+    $(endif)
+    <div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center">
+        <form name="login" action="$(link-login-only)" method="post" $(if chap-id) onsubmit="return doLogin()" $(endif) class="w-100 my-5" id="card">
+            <input type="hidden" name="dst" value="$(link-orig)">
+            <input type="hidden" name="popup" value="true">
+            <div class="card p-5 shadow-lg border-1 rounded-3">
+                <img src="img/login.png" class="d-block mx-auto mb-4 w-100" id="login-image">
+                <p class="$(if error) text-danger $(endif) mb-4 text-center">
+                    $(if error == "")
+                        Please log in to use the internet hotspot service
+                        $(if trial == "yes")<br>Free trial available, <a href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)">click here</a>.$(endif)
+                    $(endif)
+                    $(if error)
+                        $(error)
+                    $(endif)
+                </p>
+                <div class="form-floating mb-3">
+                    <input type="text" name="username" value="$(username)" class="form-control" id="username" placeholder="Username">
+                    <label for="username" class="form-label">Username</label>
+                </div>
+                <div class="form-floating mb-4">
+                    <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+                    <label for="password" class="form-label">Password</label>
+                </div>
+                <button type="submit" class="btn btn-lg btn-primary mb-4">Connect</button>
+                <p class="m-0 text-center">Powered by <span class="badge rounded-pill text-bg-info">MikroTik RouterOS</span></p>
+            </div>
+        </form>
+    </div>
+    <script src="packages/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="packages/particles/particles.min.js"></script>
+    <script src="packages/particles/app.js"></script>
+</body>
+</html>
